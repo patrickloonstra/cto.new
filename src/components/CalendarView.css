@@ -1,0 +1,255 @@
+.calendar-view {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.month-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+  flex: 1;
+  text-align: center;
+}
+
+.nav-button {
+  background: #f0f0f0;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: #333;
+}
+
+.nav-button:hover {
+  background: #e0e0e0;
+  border-color: #b0b0b0;
+}
+
+.nav-button:active {
+  transform: scale(0.95);
+}
+
+.nav-button:focus {
+  outline: 2px solid #4a90e2;
+  outline-offset: 2px;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.weekday-header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: #666;
+  padding: 10px 0;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 80px;
+  transition: all 0.2s;
+}
+
+.calendar-day-empty {
+  border: none;
+  background: transparent;
+}
+
+.calendar-day:not(.calendar-day-empty):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.day-number {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.indicators {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: auto;
+}
+
+.indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #d0d0d0;
+  background: #f8f8f8;
+  transition: all 0.2s;
+}
+
+.indicator.active {
+  transform: scale(1.1);
+}
+
+.indicator-written.active {
+  background: #4a90e2;
+  border-color: #3a7bc8;
+}
+
+.indicator-published.active {
+  background: #52c41a;
+  border-color: #3da115;
+}
+
+.status-none {
+  background: #ffffff;
+  border-color: #e0e0e0;
+}
+
+.status-written {
+  background: #e6f2ff;
+  border-color: #4a90e2;
+}
+
+.status-published {
+  background: #f0fae8;
+  border-color: #52c41a;
+}
+
+.status-both {
+  background: linear-gradient(135deg, #e6f2ff 0%, #e6f2ff 50%, #f0fae8 50%, #f0fae8 100%);
+  border-color: #4a90e2;
+  border-right-color: #52c41a;
+  border-bottom-color: #52c41a;
+}
+
+.calendar-legend {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.legend-title {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.legend-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.status-box {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 2px solid;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .calendar-view {
+    padding: 10px;
+  }
+
+  .month-title {
+    font-size: 20px;
+  }
+
+  .calendar-day {
+    min-height: 60px;
+    padding: 6px;
+  }
+
+  .day-number {
+    font-size: 14px;
+  }
+
+  .indicator {
+    width: 16px;
+    height: 16px;
+  }
+
+  .legend-items {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .calendar-day,
+  .nav-button,
+  .indicator {
+    transition: none;
+  }
+
+  .calendar-day:not(.calendar-day-empty):hover {
+    transform: none;
+  }
+
+  .nav-button:active {
+    transform: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .calendar-day {
+    border-width: 3px;
+  }
+
+  .indicator {
+    border-width: 3px;
+  }
+
+  .indicator-written.active {
+    background: #0056b3;
+    border-color: #003d82;
+  }
+
+  .indicator-published.active {
+    background: #237804;
+    border-color: #135200;
+  }
+}
