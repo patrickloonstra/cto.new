@@ -1,6 +1,8 @@
 .app {
   min-height: 100vh;
   background: linear-gradient(to bottom, #f0f4f8, #ffffff);
+  display: flex;
+  flex-direction: column;
 }
 
 .app-header {
@@ -15,12 +17,101 @@
   color: #1a1a1a;
 }
 
-.app-header p {
+.app-subtitle {
   margin: 0;
   font-size: 16px;
   color: #666;
 }
 
-main {
+.app-main {
+  flex: 1;
   padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.section {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.streak-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-footer {
+  background: #f8f8f8;
+  border-top: 1px solid #e0e0e0;
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  margin-top: auto;
+}
+
+.app-footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@media (max-width: 1024px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-main {
+    padding: 16px;
+  }
+
+  .layout-grid {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 30px 16px 16px;
+  }
+
+  .app-header h1 {
+    font-size: 24px;
+  }
+
+  .app-header p {
+    font-size: 14px;
+  }
+
+  .app-main {
+    padding: 12px;
+  }
+
+  .layout-grid {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .section {
+    border-radius: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section {
+    transition: none;
+  }
 }

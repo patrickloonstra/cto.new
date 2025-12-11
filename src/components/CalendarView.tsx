@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useActivity } from '../context/ActivityContext';
 import './CalendarView.css';
 
 export interface DayStatus {
@@ -9,10 +10,14 @@ export interface DayStatus {
 
 export interface CalendarViewProps {
   dayStatuses?: DayStatus[];
+  onDayClick?: (date: Date) => void;
 }
 
-export function CalendarView({ dayStatuses = [] }: CalendarViewProps) {
+export function CalendarView({ dayStatuses = [], onDayClick }: CalendarViewProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [showDayPanel, setShowDayPanel] = useState(false);
+  const { getActivity, updateActivity, clearActivity } = useActivity();
 
   const getMonthName = (date: Date) => {
     return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
@@ -39,12 +44,59 @@ export function CalendarView({ dayStatuses = [] }: CalendarViewProps) {
   };
 
   const getStatusForDate = (date: Date) => {
+    const activity = getActivity(date);
+    if (activity) {
+      return {
+        written: activity.written,
+        published: activity.published,
+      };
+    }
+
+    // Fall back to prop-based statuses if provided
     const normalizedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     const status = dayStatuses.find(s => {
       const sDate = new Date(s.date.getFullYear(), s.date.getMonth(), s.date.getDate());
       return sDate.getTime() === normalizedDate.getTime();
     });
     return status || { written: false, published: false };
+  };
+
+  const handleDayClick = (date: Date) => {
+    setSelectedDate(date);
+    setShowDayPanel(true);
+    onDayClick?.(date);
+  };
+
+  const toggleWritten = () => {
+    if (selectedDate) {
+      const current = getActivity(selectedDate);
+      updateActivity(selectedDate, !current?.written, current?.published);
+    }
+  };
+
+  const togglePublished = () => {
+    if (selectedDate) {
+      const current = getActivity(selectedDate);
+      updateActivity(selectedDate, current?.written, !current?.published);
+    }
+  };
+
+  const handleClear = () => {
+    if (selectedDate) {
+      clearActivity(selectedDate);
+    }
+  };
+
+  const handleBothToggle = () => {
+    if (selectedDate) {
+      const current = getActivity(selectedDate);
+      const bothActive = current?.written && current?.published;
+      if (bothActive) {
+        clearActivity(selectedDate);
+      } else {
+        updateActivity(selectedDate, true, true);
+      }
+    }
   };
 
   const renderCalendarDays = () => {
@@ -71,8 +123,24 @@ export function CalendarView({ dayStatuses = [] }: CalendarViewProps) {
         statusClass = 'status-written';
       }
 
+      const isSelected = selectedDate && 
+        selectedDate.getFullYear() === date.getFullYear() &&
+        selectedDate.getMonth() === date.getMonth() &&
+        selectedDate.getDate() === date.getDate();
+
       days.push(
-        <div key={day} className={`calendar-day ${statusClass}`}>
+        <div 
+          key={day} 
+          className={`calendar-day ${statusClass} ${isSelected ? 'selected' : ''}`}
+          onClick={() => handleDayClick(date)}
+          role="button"
+          tabIndex={0}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              handleDayClick(date);
+            }
+          }}
+        >
           <div className="day-number">{day}</div>
           <div className="indicators">
             <div 
@@ -92,6 +160,11 @@ export function CalendarView({ dayStatuses = [] }: CalendarViewProps) {
   };
 
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  const selectedStatus = selectedDate ? getStatusForDate(selectedDate) : null;
+  const selectedDateStr = selectedDate 
+    ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+    : '';
 
   return (
     <div className="calendar-view">
@@ -124,6 +197,57 @@ export function CalendarView({ dayStatuses = [] }: CalendarViewProps) {
       <div className="calendar-grid">
         {renderCalendarDays()}
       </div>
+
+      {showDayPanel && selectedDate && selectedStatus && (
+        <div className="day-panel">
+          <div className="panel-header">
+            <h3>Edit Activity</h3>
+            <button 
+              className="close-btn" 
+              onClick={() => setShowDayPanel(false)}
+              aria-label="Close panel"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className="panel-content">
+            <p className="selected-date">{selectedDateStr}</p>
+            
+            <div className="activity-controls">
+              <button
+                className={`toggle-btn ${selectedStatus.written ? 'active' : ''}`}
+                onClick={toggleWritten}
+              >
+                <span className="indicator indicator-written"></span>
+                Toggle Written
+              </button>
+              <button
+                className={`toggle-btn ${selectedStatus.published ? 'active' : ''}`}
+                onClick={togglePublished}
+              >
+                <span className="indicator indicator-published"></span>
+                Toggle Published
+              </button>
+              <button
+                className={`toggle-btn both ${selectedStatus.written && selectedStatus.published ? 'active' : ''}`}
+                onClick={handleBothToggle}
+              >
+                Both
+              </button>
+            </div>
+
+            {(selectedStatus.written || selectedStatus.published) && (
+              <button
+                className="clear-btn"
+                onClick={handleClear}
+              >
+                Clear Activity
+              </button>
+            )}
+          </div>
+        </div>
+      )}
 
       <div className="calendar-legend">
         <h3 className="legend-title">Legend</h3>
