@@ -1,0 +1,21 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "Utilities for calculating writing streaks with grace logic",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patrickloonstra/cto.new.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/patrickloonstra/cto.new/issues"
+  },
+  "homepage": "https://github.com/patrickloonstra/cto.new#readme"
+}
