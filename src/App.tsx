@@ -1,38 +1,45 @@
-import './App.css';
-import { Calendar } from './components/Calendar';
+import { CalendarView, DayStatus } from './components/CalendarView';
 import { StreakCounter } from './components/StreakCounter';
-import { Controls } from './components/Controls';
+import { ActivityProvider } from './context/ActivityContext';
+import './App.css';
 
 function App() {
+  const mockDayStatuses: DayStatus[] = [
+    { date: new Date(2024, 0, 5), written: true, published: false },
+    { date: new Date(2024, 0, 8), written: true, published: true },
+    { date: new Date(2024, 0, 12), written: false, published: true },
+    { date: new Date(2024, 0, 15), written: true, published: false },
+    { date: new Date(2024, 0, 18), written: true, published: true },
+    { date: new Date(2024, 0, 22), written: true, published: false },
+    { date: new Date(2024, 0, 25), written: false, published: true },
+    { date: new Date(2024, 0, 28), written: true, published: true },
+  ];
+
   return (
-    <div className="app-container">
-      <header className="app-header">
-        <h1>LinkedIn Streak Tracker</h1>
-        <p className="app-subtitle">
-          Track your daily LinkedIn engagement streak
-        </p>
-      </header>
+    <ActivityProvider>
+      <div className="app">
+        <header className="app-header">
+          <h1>LinkedIn Streak Tracker</h1>
+          <p className="app-subtitle">Track your daily LinkedIn engagement streak</p>
+        </header>
+        
+        <main className="app-main">
+          <div className="layout-grid">
+            <section className="section streak-section">
+              <StreakCounter />
+            </section>
 
-      <main className="app-main">
-        <div className="layout-grid">
-          <section className="section streak-section">
-            <StreakCounter />
-          </section>
+            <section className="section calendar-section">
+              <CalendarView dayStatuses={mockDayStatuses} />
+            </section>
+          </div>
+        </main>
 
-          <section className="section calendar-section">
-            <Calendar />
-          </section>
-
-          <section className="section controls-section">
-            <Controls />
-          </section>
-        </div>
-      </main>
-
-      <footer className="app-footer">
-        <p>&copy; 2024 LinkedIn Streak Tracker. All rights reserved.</p>
-      </footer>
-    </div>
+        <footer className="app-footer">
+          <p>&copy; 2024 LinkedIn Streak Tracker. All rights reserved.</p>
+        </footer>
+      </div>
+    </ActivityProvider>
   );
 }
 

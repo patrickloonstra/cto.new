@@ -1,42 +1,256 @@
 .streak-counter {
-  text-align: center;
+  padding: 24px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
 }
 
 .streak-counter h2 {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  margin-bottom: var(--spacing-lg);
-  color: var(--color-text-primary);
+  margin: 0 0 24px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
 }
 
 .streak-display {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 20px;
+  border-radius: 8px;
+  background: #f8f8f8;
+}
+
+.streak-display.status-healthy {
+  background: linear-gradient(135deg, #f0fae8 0%, #f5ffea 100%);
+  border: 2px solid #52c41a;
+}
+
+.streak-display.status-grace {
+  background: linear-gradient(135deg, #fff7e6 0%, #fffbe6 100%);
+  border: 2px solid #faad14;
+}
+
+.streak-display.status-broken {
+  background: linear-gradient(135deg, #fff1f0 0%, #fff5f5 100%);
+  border: 2px solid #ff4d4f;
 }
 
 .streak-number {
-  font-size: 4rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-streak-active);
+  font-size: 56px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+}
+
+.streak-number.healthy {
+  color: #52c41a;
+}
+
+.streak-number.grace {
+  color: #faad14;
+}
+
+.streak-number.broken {
+  color: #ff4d4f;
 }
 
 .streak-label {
-  font-size: var(--font-size-lg);
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
+  font-size: 18px;
+  color: #666;
+  font-weight: 500;
+}
+
+.streak-status {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.status-badge {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  background: #f0f0f0;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.streak-status.healthy .status-badge {
+  background: #f0fae8;
+  color: #237804;
+  border: 1px solid #52c41a;
+}
+
+.streak-status.grace .status-badge {
+  background: #fff7e6;
+  color: #ad6800;
+  border: 1px solid #faad14;
+}
+
+.streak-status.broken .status-badge {
+  background: #fff1f0;
+  color: #a4161a;
+  border: 1px solid #ff4d4f;
 }
 
 .streak-info {
-  padding: var(--spacing-md);
-  background-color: var(--color-surface);
-  border-radius: var(--border-radius);
-  color: var(--color-text-secondary);
+  padding: 16px;
+  background: #f8f8f8;
+  border-radius: 6px;
+  margin-bottom: 24px;
 }
 
-.streak-info p {
-  font-size: var(--font-size-sm);
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.info-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.info-value {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.status-text {
+  color: #666;
+}
+
+.status-text.healthy {
+  color: #237804;
+}
+
+.status-text.grace {
+  color: #ad6800;
+}
+
+.status-text.broken {
+  color: #a4161a;
+}
+
+.streak-message {
+  padding: 12px 16px;
+  border-radius: 6px;
+  border-left: 4px solid #d0d0d0;
+  background: #f8f8f8;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #333;
+}
+
+.streak-message.healthy {
+  border-left-color: #52c41a;
+  background: #f0fae8;
+  color: #237804;
+}
+
+.streak-message.grace {
+  border-left-color: #faad14;
+  background: #fff7e6;
+  color: #ad6800;
+}
+
+.streak-message.broken {
+  border-left-color: #ff4d4f;
+  background: #fff1f0;
+  color: #a4161a;
+}
+
+.streak-message p {
   margin: 0;
+  line-height: 1.5;
+}
+
+.warning-panel,
+.info-panel {
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid;
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.warning-panel {
+  background: #fff7e6;
+  border-color: #faad14;
+}
+
+.info-panel {
+  background: #e6f7ff;
+  border-color: #4a90e2;
+}
+
+.warning-icon,
+.info-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.warning-content,
+.info-content {
+  flex: 1;
+}
+
+.warning-content h4,
+.info-content h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.warning-content p,
+.info-content p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.warning-panel h4 {
+  color: #ad6800;
+}
+
+.warning-panel p {
+  color: #7c5800;
+}
+
+.info-panel h4 {
+  color: #1a5490;
+}
+
+.info-panel p {
+  color: #0b5394;
+}
+
+@media (max-width: 768px) {
+  .streak-counter {
+    padding: 16px;
+  }
+
+  .streak-number {
+    font-size: 42px;
+  }
+
+  .streak-display {
+    gap: 12px;
+    padding: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .streak-display {
+    transition: none;
+  }
 }

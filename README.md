@@ -1,108 +1,74 @@
-# LinkedIn Streak Tracker
+# Calendar Grid View
 
-A lightweight frontend application built with Vite, React, and TypeScript to track daily LinkedIn engagement streaks.
+A React TypeScript component that renders a calendar with visual indicators for tracking writing and publishing status.
 
-## Project Structure
+## Features
 
+- **Month Grid View**: Displays the current month with weekday headers and one cell per day
+- **Visual Indicators**: Each day cell contains two indicator dots (written/published)
+- **Status States**: Four distinct visual states:
+  - None: No activity (white background)
+  - Written only: Blue themed (light blue background)
+  - Published only: Green themed (light green background)
+  - Both: Gradient combining blue and green
+- **Month Navigation**: Previous/Next buttons to navigate between months
+- **Interactive Legend**: Explains all indicators and status states
+- **Accessible**: Includes ARIA labels, keyboard navigation support, and high contrast mode support
+- **Responsive**: Adapts to different screen sizes
+
+## Usage
+
+```tsx
+import { CalendarView, DayStatus } from './components/CalendarView';
+
+const dayStatuses: DayStatus[] = [
+  { date: new Date(2024, 0, 5), written: true, published: false },
+  { date: new Date(2024, 0, 8), written: true, published: true },
+  { date: new Date(2024, 0, 12), written: false, published: true },
+];
+
+function App() {
+  return <CalendarView dayStatuses={dayStatuses} />;
+}
 ```
-src/
-├── components/
-│   ├── Calendar.tsx       # Calendar view for activity tracking
-│   ├── Controls.tsx       # Action buttons and controls
-│   ├── StreakCounter.tsx  # Current streak display
-│   └── index.ts           # Component exports
-├── App.tsx                # Main application component with layout
-├── App.css                # Application styles
-├── index.css              # Global styles and color palette
-└── main.tsx               # Application entry point
 
-public/
-└── vite.svg               # Vite logo asset
+## Props
 
-Configuration Files:
-├── vite.config.ts         # Vite configuration
-├── tsconfig.json          # TypeScript configuration
-├── .eslintrc.cjs          # ESLint configuration
-├── .prettierrc.json       # Prettier formatting configuration
-└── package.json           # Project dependencies and scripts
-```
+### CalendarViewProps
 
-## Color Palette
+- `dayStatuses` (optional): Array of `DayStatus` objects representing the status for each day
 
-The application uses a professional LinkedIn-inspired color palette defined in `src/index.css`:
+### DayStatus
 
-- **Primary**: `#0a66c2` (LinkedIn Blue)
-- **Streak Active**: `#31a24c` (Green)
-- **Streak Warning**: `#ff9500` (Orange)
-- **Streak Danger**: `#c5222b` (Red)
-- **Streak Neutral**: `#8a8d91` (Gray)
+- `date`: JavaScript Date object
+- `written`: Boolean indicating if content was written on this day
+- `published`: Boolean indicating if content was published on this day
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 16+ and npm
-
-### Installation
+## Development
 
 ```bash
+# Install dependencies
 npm install
-```
 
-### Development
-
-Start the development server:
-
-```bash
+# Run development server
 npm run dev
-```
 
-The application will open automatically at `http://localhost:5173/`
+# Type checking
+npm run typecheck
 
-### Building for Production
-
-```bash
+# Build for production
 npm run build
 ```
 
-This will create an optimized production build in the `dist/` directory.
+## Accessibility Features
 
-### Linting
+- Semantic HTML structure
+- ARIA labels for navigation buttons and indicators
+- Keyboard navigation support
+- High contrast mode support
+- Reduced motion support for users with motion sensitivity
+- Focus indicators for interactive elements
 
-Check code quality:
+## Browser Support
 
-```bash
-npm run lint
-```
-
-### Formatting
-
-Format code with Prettier:
-
-```bash
-npm run format
-```
-
-## Components
-
-### StreakCounter
-
-Displays the current streak count and last activity date. This is a placeholder component that will be enhanced in subsequent tickets.
-
-### Calendar
-
-Shows a grid view of activity days with a color-coded legend for different streak states (active, warning, neutral). Currently displays placeholder data.
-
-### Controls
-
-Provides action buttons for logging daily activity and resetting the streak. Functions are currently stubs ready for implementation.
-
-## Next Steps
-
-This is the bootstrap phase. Subsequent tickets should focus on:
-
-1. Backend API integration for streak data
-2. Real calendar implementation with actual data
-3. Streak logic and persistence
-4. User authentication
-5. Additional features and optimizations
+Works in all modern browsers that support ES2020 and CSS Grid.
